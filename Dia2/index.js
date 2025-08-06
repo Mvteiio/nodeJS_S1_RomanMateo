@@ -1,7 +1,7 @@
 let prompt = require('prompt-sync')();
 
 //Conexión a MongoDB
-const { MongoClient,ObjectId } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 const uri = 'mongodb+srv://romancamargo02:TxcijpfOYeDfaRR4@cluster0.vmq8c0v.mongodb.net/';
 const dbName = 'crud_db';
 const collectionName = 'personas';
@@ -17,15 +17,15 @@ async function leerPersonas() {
         collection = db.collection(collectionName);
         console.log("Conectado a la base de datos 🎉");
         const personas = await collection.find().toArray();
-        for(let i=0;i<personas.length;i++){
+        for (let i = 0; i < personas.length; i++) {
             console.log(" ")
-            console.log("Persona #",i+1)
-            console.log("ID:",personas[i]["_id"]);
-            console.log("Nombre:",personas[i]["nombre"]);
-            console.log("Ruta:",personas[i]["ruta"]);
+            console.log("Persona #", i + 1)
+            console.log("ID:", personas[i]["_id"]);
+            console.log("Nombre:", personas[i]["nombre"]);
+            console.log("Edad:", personas[i]["edad"]);
         }
         console.log(" ");
-        
+
     }
     catch (e) {
         console.log("Error:", e);
@@ -42,20 +42,20 @@ async function actualizarPersonas() {
         db = client.db(dbName);
         collection = db.collection(collectionName);
         const idObjeto = prompt("Ingresar el ObjectID de la persona:");
-        if(!ObjectId.isValid(idObjeto)){
+        if (!ObjectId.isValid(idObjeto)) {
             console.log("Este ID no es valido ❌");
             return;
-        }else{
+        } else {
             const nuevoNombre = prompt("Ingresa el nuevo nombre:");
-            const nuevaRuta = prompt("Ingresa la nueva ruta:");
+            const nuevaEdad = parseInt(prompt("Ingresa la nueva edad:"));
             const result = await collection.updateOne(
-                {_id:new ObjectId(idObjeto)},
-                {$set:{nombre:nuevoNombre,ruta:nuevaRuta}}
+                { _id: new ObjectId(idObjeto) },
+                { $set: { nombre: nuevoNombre, edad: nuevaEdad } }
             )
-            if (result.matchedCount==0){
+            if (result.matchedCount == 0) {
                 console.log("Persona no encontrada");
 
-            }else{
+            } else {
                 console.log("Persona Actualizada!");
             }
         }
@@ -67,8 +67,66 @@ async function actualizarPersonas() {
         await client.close();
         console.log("Cerrado la sesión de la base de datos");
     }
-}
+};
 
+async function eliminarPersonas() {
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        db = client.db(dbName);
+        collection = db.collection(collectionName);
+        const idEliminar = prompt("Ingresa el ObjectID de la persona a eliminar:");
+        if (!ObjectId.isValid(idEliminar)) {
+            console.log("Este ID no es valido ❌");
+            return;
+        } else {
+            const result = await collection.deleteOne({ _id: new ObjectId(idEliminar) });
+            if (result.deletedCount == 0) {
+                console.log("Persona no encontrada");
+
+            } else {
+                console.log("Persona Eliminada!");
+            }
+        }
+    }
+    catch (e) {
+        console.log("Error:", e);
+    }
+    finally {
+        await client.close();
+        console.log("Cerrado la sesión de la base de datos");
+    }
+};
+
+async function crearPersona() {
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        db = client.db(dbName);
+        collection = db.collection(collectionName);
+        const nombre = prompt("Ingresa el nombre nuevo:");
+        const edad = prompt("Ingresa la edad nueva:");
+        await collection.insertOne({nombre,edad});
+        console.log("Persona Creada!");
+    }
+    catch (e) {
+        console.log("Error:", e);
+    }
+    finally {
+        await client.close();
+        console.log("Cerrado la sesión de la base de datos");
+    }
+};
+/*
+let personas =[
+    {nombre:'Juan',edad:30},
+    {nombre:'Ana',edad:25}
+];
+console.log(personas);
+console.log(personas[0]["nombre"]);
+let n = prompt('Ingresa tu nombre:');
+console.log("Tu nombre es:",n);
+*/
 
 async function menu() {
     booleanito = true;
@@ -76,7 +134,9 @@ async function menu() {
     while (booleanito == true) {
         console.log("Escoge una opción:");
         console.log("1. Imprimir Personas");
-        console.log("1. Actualizar Personas");
+        console.log("2. Actualizar Personas");
+        console.log("3. Eliminar Personas");
+        console.log("4. Crear Persona");
         console.log("5. Salir");
         let opcion = prompt(':');
         switch (opcion.trim()) {
@@ -87,7 +147,12 @@ async function menu() {
             case '2':
                 await actualizarPersonas();
                 break;
-
+            case '3':
+                await eliminarPersonas();
+                break;
+            case '4':
+                await crearPersona();
+                break;
             case '5':
                 booleanito = false;
                 break;
