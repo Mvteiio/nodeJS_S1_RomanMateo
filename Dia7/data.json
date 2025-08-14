@@ -1,0 +1,23 @@
+[
+    {
+      "id": 1,
+      "nombre": "Pedro Pérez",
+      "telefono": "3162365244",
+      "activo": false,
+      "ruta": "node"
+    },
+    {
+      "id": 2,
+      "nombre": "Ana",
+      "telefono": "3201112233",
+      "activo": false,
+      "ruta": "react"
+    },
+    {
+      "id": 3,
+      "nombre": "Carlos",
+      "telefono": "3009998877",
+      "activo": true,
+      "ruta": "vue"
+    }
+  ]
