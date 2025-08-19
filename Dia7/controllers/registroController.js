@@ -25,7 +25,7 @@ class RegistroController {
         if (registroActualizado) {
             view.mostrarMensaje(`\n✅ Registro con id ${id} actualizado.`);
         } else {
-            view.mostrarMensaje(`\n❌ Error: No se encontró ningún registro con el id ${id}.`);
+            view.mostrarMensaje(`\n❌: No hay registro con id ${id}.`);
         }
     }
     
@@ -36,7 +36,7 @@ class RegistroController {
         if (exito) {
             view.mostrarMensaje(`\n✅ Registro con id ${id} eliminado.`);
         } else {
-            view.mostrarMensaje(`\n❌ Error: No se encontró ningún registro con el id ${id}.`);
+            view.mostrarMensaje(`\n❌: No hay registro con id ${id}.`);
         }
     }
 }

@@ -6,7 +6,7 @@ function mostrarMenu() {
     console.log(`
 ---------------------------
 --- BIENVENIDO CAMPER ---
-Por favor, elige una opción:
+Por favor, elige una opcion:
 1. Ver todos los registros
 2. Crear un registro
 3. Actualizar un registro
@@ -23,7 +23,7 @@ function obtenerEleccion() {
 function mostrarRegistros(registros) {
     console.log("--- Registros Encontrados ---");
     if (registros.length === 0) {
-        console.log("No hay registros para mostrar.");
+        console.log("No hay registros para mostrar");
     } else {
         console.table(registros);
     }
@@ -34,7 +34,7 @@ function obtenerDatosNuevoRegistro() {
     console.log("--- Crear Nuevo Registro ---");
     const nombre = prompt("Nombre: ");
     const telefono = prompt("Telefono: ");
-    const activo = prompt("¿Está activo? (true/false): ") === "true";
+    const activo = prompt("Está activo? (true/false): ") === "true";
     const ruta = prompt("Ruta: ");
     return { nombre, telefono, activo, ruta };
 }
@@ -44,7 +44,7 @@ function obtenerDatosActualizacion() {
     const id = prompt("Indica el ID a actualizar: ");
     const nombre = prompt("Nuevo Nombre (deja en blanco para no cambiar): ");
     const telefono = prompt("Nuevo Telefono (deja en blanco para no cambiar): ");
-    const activoInput = prompt("¿Está activo? (true/false, deja en blanco para no cambiar): ");
+    const activoInput = prompt("Está activo? (true/false, deja en blanco para no cambiar): ");
     const ruta = prompt("Nueva Ruta (deja en blanco para no cambiar): ");
 
     const datosActualizados = {};

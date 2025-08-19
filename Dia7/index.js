@@ -25,14 +25,14 @@ function main() {
                 break;
             case '5':
                 salir = true;
-                view.mostrarMensaje("👋 ¡Vuelve pronto!");
+                view.mostrarMensaje("Chao pescado");
                 break;
             default:
-                view.mostrarMensaje("❌ Opción no válida. Por favor, intenta de nuevo.");
+                view.mostrarMensaje("Inválido");
                 break;
         }
-        // Pausa para que el usuario pueda leer la salida antes de volver a mostrar el menú
-        if (!salir) view.obtenerEleccion("Presiona ENTER para continuar...");
+
+    
     }
 }
 
